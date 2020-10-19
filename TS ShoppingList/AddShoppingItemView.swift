@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct AddShoppingItemView: View {
-    @State private var shoppingItemTitle = ""
+    struct ShoppingItemDummy {
+        var name = ""
+    }
+    
+    @State private var shoppingItemDummy = ShoppingItemDummy()
     
     @Binding var showAddShoppingItemView: Bool
     
     var body: some View {
         NavigationView {
             Form {
-                TextField("Shopping item", text: $shoppingItemTitle)
+                TextField("Shopping item", text: $shoppingItemDummy.name)
             }
             .navigationTitle("Add shopping item")
             .navigationBarItems(
@@ -23,7 +27,9 @@ struct AddShoppingItemView: View {
                     showAddShoppingItemView = false
                 },
                 trailing: Button("Save") {
-                    // TODO: Save shopping item.
+                    let shoppingItem = ShoppingItem(context: PersistenceController.shared.container.viewContext)
+                    shoppingItem.name = shoppingItemDummy.name
+                    try? PersistenceController.shared.container.viewContext.save()
                     showAddShoppingItemView = false
                 }
             )
