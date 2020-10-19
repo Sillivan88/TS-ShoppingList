@@ -10,6 +10,7 @@ import SwiftUI
 struct AddShoppingItemView: View {
     struct ShoppingItemDummy {
         var name = ""
+        var isFavorite = false
     }
     
     @State private var shoppingItemDummy = ShoppingItemDummy()
@@ -20,6 +21,7 @@ struct AddShoppingItemView: View {
         NavigationView {
             Form {
                 TextField("Shopping item", text: $shoppingItemDummy.name)
+                Toggle("Is favorite", isOn: $shoppingItemDummy.isFavorite)
             }
             .navigationTitle("Add shopping item")
             .navigationBarItems(
@@ -29,6 +31,7 @@ struct AddShoppingItemView: View {
                 trailing: Button("Save") {
                     let shoppingItem = ShoppingItem(context: PersistenceController.shared.container.viewContext)
                     shoppingItem.name = shoppingItemDummy.name
+                    shoppingItem.isFavorite = shoppingItemDummy.isFavorite
                     try? PersistenceController.shared.container.viewContext.save()
                     showAddShoppingItemView = false
                 }

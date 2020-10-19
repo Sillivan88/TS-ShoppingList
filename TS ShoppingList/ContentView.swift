@@ -47,6 +47,11 @@ struct ShoppingCell: View {
             }
             .buttonStyle(PlainButtonStyle())
             Text(shoppingItem.name!)
+            Spacer()
+            if shoppingItem.isFavorite {
+                Image(systemName: "star.fill")
+                    .foregroundColor(.yellow)
+            }
         }
     }
 }
