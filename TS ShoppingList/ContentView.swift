@@ -21,11 +21,20 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(shoppingItems) { shoppingItem in
-                ShoppingCell(shoppingItem: shoppingItem)
+            List {
+                ForEach(shoppingItems) { shoppingItem in
+                    ShoppingCell(shoppingItem: shoppingItem)
+                }
+                .onDelete { (indexSet) in
+                    for index in indexSet {
+                        let shoppingItemToDelete = shoppingItems[index]
+                        PersistenceController.shared.container.viewContext.delete(shoppingItemToDelete)
+                        try? PersistenceController.shared.container.viewContext.save()
+                    }
+                }
             }
             .navigationTitle("Shopping List")
-            .navigationBarItems(trailing: Button("Add") {
+            .navigationBarItems(leading: EditButton(), trailing: Button("Add") {
                 showAddShoppingItemView = true
             })
             .sheet(isPresented: $showAddShoppingItemView, content: {
@@ -46,7 +55,7 @@ struct ShoppingCell: View {
                 Image(systemName: shoppingItem.isChecked ? "largecircle.fill.circle" : "circle")
             }
             .buttonStyle(PlainButtonStyle())
-            Text(shoppingItem.name!)
+            Text(shoppingItem.name ?? "")
             Spacer()
             if shoppingItem.isFavorite {
                 Image(systemName: "star.fill")
