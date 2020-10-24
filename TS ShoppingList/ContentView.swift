@@ -5,42 +5,47 @@
 //  Created by Trainer on 21.09.20.
 //
 
-import CoreData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext: NSManagedObjectContext
-    
-    @FetchRequest(
-        entity: ShoppingItem.entity(),
-        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
-    )
-    var shoppingItems: FetchedResults<ShoppingItem>
-    
     @State private var showAddShoppingItemView = false
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(shoppingItems) { shoppingItem in
-                    ShoppingCell(shoppingItem: shoppingItem)
-                }
-                .onDelete { (indexSet) in
-                    for index in indexSet {
-                        let shoppingItemToDelete = shoppingItems[index]
-                        PersistenceController.shared.container.viewContext.delete(shoppingItemToDelete)
-                        try? PersistenceController.shared.container.viewContext.save()
-                    }
+            ShoppingItemsList(showAddShoppingItemView: $showAddShoppingItemView)
+        }
+    }
+}
+
+struct ShoppingItemsList: View {
+    @FetchRequest(
+        entity: ShoppingItem.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+    )
+    private var shoppingItems: FetchedResults<ShoppingItem>
+    
+    @Binding var showAddShoppingItemView: Bool
+    
+    var body: some View {
+        List {
+            ForEach(shoppingItems) { shoppingItem in
+                ShoppingCell(shoppingItem: shoppingItem)
+            }
+            .onDelete { (indexSet) in
+                for index in indexSet {
+                    let shoppingItemToDelete = shoppingItems[index]
+                    PersistenceController.shared.container.viewContext.delete(shoppingItemToDelete)
+                    try? PersistenceController.shared.container.viewContext.save()
                 }
             }
-            .navigationTitle("Shopping List")
-            .navigationBarItems(leading: EditButton(), trailing: Button("Add") {
-                showAddShoppingItemView = true
-            })
-            .sheet(isPresented: $showAddShoppingItemView, content: {
-                AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
-            })
         }
+        .navigationTitle("Shopping List")
+        .navigationBarItems(leading: EditButton(), trailing: Button("Add") {
+            showAddShoppingItemView = true
+        })
+        .sheet(isPresented: $showAddShoppingItemView, content: {
+            AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
+        })
     }
 }
 
