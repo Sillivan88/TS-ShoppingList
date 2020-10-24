@@ -33,6 +33,10 @@ struct PersistenceController {
     }()
 
     let container: NSPersistentContainer
+    
+    var managedObjectContext: NSManagedObjectContext {
+        container.viewContext
+    }
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "TS_ShoppingList")
@@ -44,5 +48,9 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+    }
+    
+    func saveContext() {
+        try? managedObjectContext.save()
     }
 }

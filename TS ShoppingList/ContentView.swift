@@ -34,8 +34,7 @@ struct ShoppingItemsList: View {
             .onDelete { (indexSet) in
                 for index in indexSet {
                     let shoppingItemToDelete = shoppingItems[index]
-                    PersistenceController.shared.container.viewContext.delete(shoppingItemToDelete)
-                    try? PersistenceController.shared.container.viewContext.save()
+                    ShoppingItemManager.shared.delete(shoppingItem: shoppingItemToDelete)
                 }
             }
         }

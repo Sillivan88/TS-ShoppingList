@@ -7,12 +7,12 @@
 
 import SwiftUI
 
+struct ShoppingItemDummy {
+    var name = ""
+    var isFavorite = false
+}
+
 struct AddShoppingItemView: View {
-    struct ShoppingItemDummy {
-        var name = ""
-        var isFavorite = false
-    }
-    
     @State private var shoppingItemDummy = ShoppingItemDummy()
     
     @Binding var showAddShoppingItemView: Bool
@@ -29,10 +29,7 @@ struct AddShoppingItemView: View {
                     showAddShoppingItemView = false
                 },
                 trailing: Button("Save") {
-                    let shoppingItem = ShoppingItem(context: PersistenceController.shared.container.viewContext)
-                    shoppingItem.name = shoppingItemDummy.name
-                    shoppingItem.isFavorite = shoppingItemDummy.isFavorite
-                    try? PersistenceController.shared.container.viewContext.save()
+                    ShoppingItemManager.shared.addShoppingItem(fromDummy: shoppingItemDummy)
                     showAddShoppingItemView = false
                 }
             )
