@@ -26,6 +26,8 @@ struct ShoppingItemsList: View {
     
     @Binding var showAddShoppingItemView: Bool
     
+    @Environment(\.editMode) var editMode
+    
     var body: some View {
         List {
             ForEach(shoppingItems) { shoppingItem in
@@ -39,9 +41,16 @@ struct ShoppingItemsList: View {
             }
         }
         .navigationTitle("Shopping List")
-        .navigationBarItems(leading: EditButton(), trailing: Button("Add") {
-            showAddShoppingItemView = true
-        })
+        .navigationBarItems(
+            leading:
+                EditButton()
+                    .disabled(shoppingItems.isEmpty),
+            trailing:
+                Button("Add") {
+                    showAddShoppingItemView = true
+                }
+                .disabled(editMode?.wrappedValue.isEditing ?? false)
+        )
         .sheet(isPresented: $showAddShoppingItemView, content: {
             AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
         })
