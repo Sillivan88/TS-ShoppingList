@@ -8,83 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showAddShoppingItemView = false
-    
     var body: some View {
-        NavigationView {
-            ShoppingItemsList(showAddShoppingItemView: $showAddShoppingItemView)
-        }
-    }
-}
-
-struct ShoppingItemsList: View {
-    @FetchRequest(
-        entity: ShoppingItem.entity(),
-        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
-    )
-    private var shoppingItems: FetchedResults<ShoppingItem>
-    
-    @Binding var showAddShoppingItemView: Bool
-    
-    @Environment(\.editMode) var editMode
-    
-    var body: some View {
-        List {
-            ForEach(shoppingItems) { shoppingItem in
-                ShoppingCell(shoppingItem: shoppingItem)
-            }
-            .onDelete { (indexSet) in
-                for index in indexSet {
-                    let shoppingItemToDelete = shoppingItems[index]
-                    ShoppingItemManager.shared.delete(shoppingItem: shoppingItemToDelete)
+        TabView {
+            ShoppingItemsListNavigationView()
+                .tabItem {
+                    Text("Shopping List")
+                    Image(systemName: "cart.fill")
                 }
-            }
-        }
-        .navigationTitle("Shopping List")
-        .navigationBarItems(
-            leading:
-                EditButton()
-                    .disabled(shoppingItems.isEmpty),
-            trailing:
-                Button("Add") {
-                    showAddShoppingItemView = true
+            MarketsListNavigationView()
+                .tabItem {
+                    Text("Markets")
+                    Image(systemName: "building.2.fill")
                 }
-                .disabled(editMode?.wrappedValue.isEditing ?? false)
-        )
-        .sheet(isPresented: $showAddShoppingItemView, content: {
-            AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
-        })
-    }
-}
-
-struct ShoppingCell: View {
-    @ObservedObject var shoppingItem: ShoppingItem
-    
-    var body: some View {
-        HStack {
-            Button(action: {
-                shoppingItem.isChecked.toggle()
-            }) {
-                Image(systemName: shoppingItem.isChecked ? "largecircle.fill.circle" : "circle")
-            }
-            .buttonStyle(PlainButtonStyle())
-            Text(shoppingItem.name ?? "")
-            Spacer()
-            if shoppingItem.isFavorite {
-                Image(systemName: "star.fill")
-                    .foregroundColor(.yellow)
-            }
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            ShoppingCell(shoppingItem: PersistenceController.testShoppingItem)
-                .previewLayout(.sizeThatFits)
-        }
+        ContentView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
