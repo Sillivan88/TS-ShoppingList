@@ -43,7 +43,7 @@ struct ShoppingItemsList: View {
         .navigationTitle("Shopping List")
         .navigationBarItems(
             leading:
-                EditButton()
+                CustomEditButton()
                     .disabled(shoppingItems.isEmpty),
             trailing:
                 Button("Add") {
