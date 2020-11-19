@@ -11,28 +11,12 @@ struct AddMarketView: View {
     @StateObject private var newMarket = Market(context: PersistenceController.shared.managedObjectContext)
     
     var body: some View {
-        let nameBinding = Binding<String>(get: {
-            if self.newMarket.name != nil {
-                return self.newMarket.name!
-            }
-            return ""
-        }, set: {
-            self.newMarket.name = $0
-        })
-        let notesBinding = Binding<String>(get: {
-            if self.newMarket.notes != nil {
-                return self.newMarket.notes!
-            }
-            return ""
-        }, set: {
-            self.newMarket.notes = $0
-        })
-        return Form {
+        Form {
             Section(header: Text("Name")) {
-                TextField("Name", text: nameBinding)
+                TextField("Name", text: Binding<String>.convertOptionalString($newMarket.name))
             }
             Section(header: Text("Notes")) {
-                TextEditor(text: notesBinding)
+                TextEditor(text: Binding<String>.convertOptionalString($newMarket.notes))
                     .frame(height: 300)
             }
         }
