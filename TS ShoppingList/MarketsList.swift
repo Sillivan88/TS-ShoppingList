@@ -22,13 +22,21 @@ struct MarketsList: View {
     )
     private var markets: FetchedResults<Market>
     
+    @State private var showAddMarketView = false
+    
     var body: some View {
         List {
             ForEach(markets) { market in
                 Text(market.name ?? "")
             }
         }
+        .navigationBarItems(trailing: Button("Add") {
+            showAddMarketView = true
+        })
         .navigationTitle("Markets")
+        .sheet(isPresented: $showAddMarketView) {
+            AddMarketView(showAddMarketView: $showAddMarketView)
+        }
     }
 }
 

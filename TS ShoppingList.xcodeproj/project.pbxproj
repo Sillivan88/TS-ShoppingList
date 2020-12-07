@@ -10,6 +10,7 @@
 		A92FBDA7255FFEC7007C0280 /* CustomEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92FBDA6255FFEC7007C0280 /* CustomEditButton.swift */; };
 		A92FBDAB256002FE007C0280 /* AddMarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92FBDAA256002FE007C0280 /* AddMarketView.swift */; };
 		A92FBDB3256008AF007C0280 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92FBDB2256008AF007C0280 /* BindingExtension.swift */; };
+		A93F804325669A40003CB8C9 /* MarketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93F804225669A40003CB8C9 /* MarketManager.swift */; };
 		A9690B37251CBD1C00F45167 /* AddShoppingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9690B36251CBD1C00F45167 /* AddShoppingItemView.swift */; };
 		A9848E2525443C80001F470E /* ShoppingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9848E2425443C80001F470E /* ShoppingItemManager.swift */; };
 		A9B62AC72518E24B00E765E0 /* TS_ShoppingListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B62AC62518E24B00E765E0 /* TS_ShoppingListApp.swift */; };
@@ -26,6 +27,7 @@
 		A92FBDA6255FFEC7007C0280 /* CustomEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEditButton.swift; sourceTree = "<group>"; };
 		A92FBDAA256002FE007C0280 /* AddMarketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMarketView.swift; sourceTree = "<group>"; };
 		A92FBDB2256008AF007C0280 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
+		A93F804225669A40003CB8C9 /* MarketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketManager.swift; sourceTree = "<group>"; };
 		A9690B36251CBD1C00F45167 /* AddShoppingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingItemView.swift; sourceTree = "<group>"; };
 		A9848E2425443C80001F470E /* ShoppingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemManager.swift; sourceTree = "<group>"; };
 		A9B62AC32518E24B00E765E0 /* TS ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TS ShoppingList.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 				A92FBDB2256008AF007C0280 /* BindingExtension.swift */,
 				A9B62ACF2518E24B00E765E0 /* Persistence.swift */,
 				A9848E2425443C80001F470E /* ShoppingItemManager.swift */,
+				A93F804225669A40003CB8C9 /* MarketManager.swift */,
 				A9B62ACA2518E24B00E765E0 /* Assets.xcassets */,
 				A9B62AD42518E24B00E765E0 /* Info.plist */,
 				A9B62AD12518E24B00E765E0 /* TS_ShoppingList.xcdatamodeld */,
@@ -166,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F88F8625598A760063B64A /* ShoppingItemsList.swift in Sources */,
+				A93F804325669A40003CB8C9 /* MarketManager.swift in Sources */,
 				A92FBDA7255FFEC7007C0280 /* CustomEditButton.swift in Sources */,
 				A9848E2525443C80001F470E /* ShoppingItemManager.swift in Sources */,
 				A92FBDB3256008AF007C0280 /* BindingExtension.swift in Sources */,
