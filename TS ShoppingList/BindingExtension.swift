@@ -9,20 +9,20 @@ import SwiftUI
 
 extension Binding {
     
-    static func convertOptionalValue<T>(_ optionalValue: Binding<T?>, fallback: T) -> Binding<T> {
+    func toNonOptionalValue<T>(fallback: T) -> Binding<T> where Value == T? {
         Binding<T>(get: {
-            optionalValue.wrappedValue ?? fallback
+            wrappedValue ?? fallback
         }, set: {
-            optionalValue.wrappedValue = $0
+            wrappedValue = $0
         })
     }
     
-    static func convertOptionalString(_ optionalString: Binding<String?>, fallback: String = "") -> Binding<String> {
-        Binding<String>.convertOptionalValue(optionalString, fallback: fallback)
+    func toNonOptionalString(fallback: String = "") -> Binding<String> where Value == String? {
+        toNonOptionalValue(fallback: fallback)
     }
     
-    static func convertOptionalDate(_ optionalDate: Binding<Date?>, fallback: Date = Date()) -> Binding<Date> {
-        Binding<Date>.convertOptionalValue(optionalDate, fallback: fallback)
+    func toNonOptionalDate(fallback: Date = Date()) -> Binding<Date> where Value == Date? {
+        toNonOptionalValue(fallback: fallback)
     }
     
 }

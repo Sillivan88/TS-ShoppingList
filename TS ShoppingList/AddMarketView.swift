@@ -18,10 +18,10 @@ struct AddMarketView: View {
         NavigationView {
             Form {
                 Section(header: Text("Name")) {
-                    TextField("Name", text: Binding<String>.convertOptionalString($newMarket.name))
+                    TextField("Name", text: $newMarket.name.toNonOptionalString())
                 }
                 Section(header: Text("Notes")) {
-                    TextEditor(text: Binding<String>.convertOptionalString($newMarket.notes))
+                    TextEditor(text: $newMarket.notes.toNonOptionalString())
                         .frame(height: 300)
                 }
             }
