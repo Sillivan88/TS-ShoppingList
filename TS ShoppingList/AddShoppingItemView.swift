@@ -19,10 +19,7 @@ struct AddShoppingItemView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                TextField("Shopping item", text: $shoppingItemDummy.name)
-                Toggle("Is favorite", isOn: $shoppingItemDummy.isFavorite)
-            }
+            ShoppingItemView(name: $shoppingItemDummy.name, isFavorite: $shoppingItemDummy.isFavorite)
             .navigationTitle("Add shopping item")
             .navigationBarItems(
                 leading: Button("Cancel") {
@@ -41,13 +38,23 @@ struct EditShoppingItemView: View {
     @ObservedObject var shoppingItem: ShoppingItem
     
     var body: some View {
-        Form {
-            TextField("Shopping item", text: $shoppingItem.name.toNonOptionalString())
-            Toggle("Is favorite", isOn: $shoppingItem.isFavorite)
-        }
+        ShoppingItemView(name: $shoppingItem.name.toNonOptionalString(), isFavorite: $shoppingItem.isFavorite)
         .navigationTitle("Edit shopping item")
         .onDisappear {
             PersistenceController.shared.saveContext()
+        }
+    }
+}
+
+struct ShoppingItemView: View {
+    @Binding var name: String
+    
+    @Binding var isFavorite: Bool
+    
+    var body: some View {
+        Form {
+            TextField("Shopping item", text: $name)
+            Toggle("Is favorite", isOn: $isFavorite)
         }
     }
 }
