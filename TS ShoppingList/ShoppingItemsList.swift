@@ -31,7 +31,7 @@ struct ShoppingItemsList: View {
     var body: some View {
         List {
             ForEach(shoppingItems) { shoppingItem in
-                ShoppingCell(shoppingItem: shoppingItem)
+                ShoppingNavigationCell(shoppingItem: shoppingItem)
             }
             .onDelete { (indexSet) in
                 for index in indexSet {
@@ -54,6 +54,16 @@ struct ShoppingItemsList: View {
         .sheet(isPresented: $showAddShoppingItemView, content: {
             AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
         })
+    }
+}
+
+struct ShoppingNavigationCell: View {
+    let shoppingItem: ShoppingItem
+    
+    var body: some View {
+        NavigationLink(destination: EditShoppingItemView(shoppingItem: shoppingItem)) {
+            ShoppingCell(shoppingItem: shoppingItem)
+        }
     }
 }
 

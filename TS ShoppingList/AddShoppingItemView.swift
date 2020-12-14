@@ -37,6 +37,21 @@ struct AddShoppingItemView: View {
     }
 }
 
+struct EditShoppingItemView: View {
+    @ObservedObject var shoppingItem: ShoppingItem
+    
+    var body: some View {
+        Form {
+            TextField("Shopping item", text: $shoppingItem.name.toNonOptionalString())
+            Toggle("Is favorite", isOn: $shoppingItem.isFavorite)
+        }
+        .navigationTitle("Edit shopping item")
+        .onDisappear {
+            PersistenceController.shared.saveContext()
+        }
+    }
+}
+
 struct AddShoppingItemView_Previews: PreviewProvider {
     static var previews: some View {
         AddShoppingItemView(showAddShoppingItemView: .constant(false))
