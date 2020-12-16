@@ -8,20 +8,28 @@
 import SwiftUI
 
 struct AddMarketView: View {
-    @StateObject private var newMarket = Market(context: PersistenceController.shared.managedObjectContext)
+    private var newMarket: StateObject<Market>
     
     @State private var didDisappearWithButton = false
     
-    @Binding var showAddMarketView: Bool
+    var showAddMarketView: Binding<Bool>
+    
+    let marketManager: MarketManager
+    
+    init(showAddMarketView: Binding<Bool>, marketManager: MarketManager) {
+        self.showAddMarketView = showAddMarketView
+        self.marketManager = marketManager
+        newMarket = StateObject<Market>(wrappedValue: Market(context: marketManager.managedObjectContext))
+    }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Name")) {
-                    TextField("Name", text: $newMarket.name.toNonOptionalString())
+                    TextField("Name", text: newMarket.projectedValue.name.toNonOptionalString())
                 }
                 Section(header: Text("Notes")) {
-                    TextEditor(text: $newMarket.notes.toNonOptionalString())
+                    TextEditor(text: newMarket.projectedValue.notes.toNonOptionalString())
                         .frame(height: 300)
                 }
             }
@@ -44,16 +52,16 @@ struct AddMarketView: View {
     private func hideAddMarketView(shouldSaveNewMarket: Bool) {
         didDisappearWithButton = true
         if shouldSaveNewMarket {
-            PersistenceController.shared.saveContext()
+            marketManager.saveContext()
         } else {
-            MarketManager.shared.delete(market: newMarket)
+            marketManager.delete(market: newMarket.wrappedValue)
         }
-        showAddMarketView = false
+        showAddMarketView.wrappedValue = false
     }
 }
 
 struct AddMarketView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMarketView(showAddMarketView: .constant(true))
+        AddMarketView(showAddMarketView: .constant(true), marketManager: MarketManager(usePreview: true))
     }
 }

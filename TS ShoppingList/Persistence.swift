@@ -28,6 +28,8 @@ struct PersistenceController {
         for _ in 0..<10 {
             let newItem = ShoppingItem(context: viewContext)
             newItem.name = "Testprodukt"
+            let newMarket = Market(context: viewContext)
+            newMarket.name = "Testmarkt"
         }
         do {
             try viewContext.save()

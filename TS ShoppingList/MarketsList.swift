@@ -24,6 +24,8 @@ struct MarketsList: View {
     
     @State private var showAddMarketView = false
     
+    @EnvironmentObject var marketManager: MarketManager
+    
     var body: some View {
         List {
             ForEach(markets) { market in
@@ -35,13 +37,15 @@ struct MarketsList: View {
         })
         .navigationTitle("Markets")
         .sheet(isPresented: $showAddMarketView) {
-            AddMarketView(showAddMarketView: $showAddMarketView)
+            AddMarketView(showAddMarketView: $showAddMarketView, marketManager: marketManager)
         }
     }
 }
 
 struct MarketsList_Previews: PreviewProvider {
     static var previews: some View {
-        MarketsList()
+        MarketsListNavigationView()
+            .environment(\.managedObjectContext, PersistenceController.preview.managedObjectContext)
+            .environmentObject(MarketManager(usePreview: true))
     }
 }

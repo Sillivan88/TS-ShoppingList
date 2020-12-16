@@ -7,15 +7,11 @@
 
 import Foundation
 
-class MarketManager {
-    
-    static let shared = MarketManager()
-    
-    private init() {}
+class MarketManager: PersistenceManager {
     
     func delete(market: Market) {
-        PersistenceController.shared.managedObjectContext.delete(market)
-        PersistenceController.shared.saveContext()
+        managedObjectContext.delete(market)
+        saveContext()
     }
     
 }
