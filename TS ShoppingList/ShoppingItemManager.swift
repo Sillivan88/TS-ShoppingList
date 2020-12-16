@@ -7,26 +7,22 @@
 
 import Foundation
 
-class ShoppingItemManager {
-    
-    static let shared = ShoppingItemManager()
-    
-    private init() {}
+class ShoppingItemManager: PersistenceManager {
     
     func addShoppingItem(fromDummy dummy: ShoppingItemDummy) {
         addShoppingItem(withName: dummy.name, isFavorite: dummy.isFavorite)
     }
     
     func addShoppingItem(withName name: String, isFavorite: Bool) {
-        let shoppingItem = ShoppingItem(context: PersistenceController.shared.managedObjectContext)
+        let shoppingItem = ShoppingItem(context: managedObjectContext)
         shoppingItem.name = name
         shoppingItem.isFavorite = isFavorite
-        PersistenceController.shared.saveContext()
+        saveContext()
     }
     
     func delete(shoppingItem: ShoppingItem) {
-        PersistenceController.shared.managedObjectContext.delete(shoppingItem)
-        PersistenceController.shared.saveContext()
+        managedObjectContext.delete(shoppingItem)
+        saveContext()
     }
     
 }

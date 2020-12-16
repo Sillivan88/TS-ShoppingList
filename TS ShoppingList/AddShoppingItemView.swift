@@ -17,6 +17,8 @@ struct AddShoppingItemView: View {
     
     @Binding var showAddShoppingItemView: Bool
     
+    @EnvironmentObject var shoppingItemManager: ShoppingItemManager
+    
     var body: some View {
         NavigationView {
             ShoppingItemView(name: $shoppingItemDummy.name, isFavorite: $shoppingItemDummy.isFavorite)
@@ -26,7 +28,7 @@ struct AddShoppingItemView: View {
                     showAddShoppingItemView = false
                 },
                 trailing: Button("Save") {
-                    ShoppingItemManager.shared.addShoppingItem(fromDummy: shoppingItemDummy)
+                    shoppingItemManager.addShoppingItem(fromDummy: shoppingItemDummy)
                     showAddShoppingItemView = false
                 }
             )
@@ -37,11 +39,13 @@ struct AddShoppingItemView: View {
 struct EditShoppingItemView: View {
     @ObservedObject var shoppingItem: ShoppingItem
     
+    @EnvironmentObject var shoppingItemManager: ShoppingItemManager
+    
     var body: some View {
         ShoppingItemView(name: $shoppingItem.name.toNonOptionalString(), isFavorite: $shoppingItem.isFavorite)
         .navigationTitle("Edit shopping item")
         .onDisappear {
-            PersistenceController.shared.saveContext()
+            shoppingItemManager.saveContext()
         }
     }
 }
@@ -62,5 +66,6 @@ struct ShoppingItemView: View {
 struct AddShoppingItemView_Previews: PreviewProvider {
     static var previews: some View {
         AddShoppingItemView(showAddShoppingItemView: .constant(false))
+            .environmentObject(ShoppingItemManager(usePreview: true))
     }
 }

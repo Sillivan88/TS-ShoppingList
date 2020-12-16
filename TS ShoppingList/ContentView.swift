@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    var shoppingItemManager = ShoppingItemManager()
+    
     var body: some View {
         TabView {
             ShoppingItemsListNavigationView()
+                .environmentObject(shoppingItemManager)
                 .tabItem {
                     Text("Shopping List")
                     Image(systemName: "cart.fill")
@@ -26,7 +29,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(shoppingItemManager: ShoppingItemManager(usePreview: true))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

@@ -26,6 +26,8 @@ struct ShoppingItemsList: View {
     
     @Binding var showAddShoppingItemView: Bool
     
+    @EnvironmentObject var shoppingItemManager: ShoppingItemManager
+    
     @Environment(\.editMode) var editMode
     
     var body: some View {
@@ -36,7 +38,7 @@ struct ShoppingItemsList: View {
             .onDelete { (indexSet) in
                 for index in indexSet {
                     let shoppingItemToDelete = shoppingItems[index]
-                    ShoppingItemManager.shared.delete(shoppingItem: shoppingItemToDelete)
+                    shoppingItemManager.delete(shoppingItem: shoppingItemToDelete)
                 }
             }
         }
@@ -53,6 +55,7 @@ struct ShoppingItemsList: View {
         )
         .sheet(isPresented: $showAddShoppingItemView, content: {
             AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
+                .environmentObject(shoppingItemManager)
         })
     }
 }
@@ -92,7 +95,8 @@ struct ShoppingItemsList_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ShoppingItemsList(showAddShoppingItemView: .constant(false))
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+                .environment(\.managedObjectContext, PersistenceController.preview.managedObjectContext)
+                .environmentObject(ShoppingItemManager(usePreview: true))
             ShoppingCell(shoppingItem: PersistenceController.testShoppingItem)
                 .previewLayout(.sizeThatFits)
         }
