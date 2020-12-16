@@ -10,6 +10,7 @@ import SwiftUI
 struct ShoppingItemDummy {
     var name = ""
     var isFavorite = false
+    var price: Double = 0
 }
 
 struct AddShoppingItemView: View {
@@ -21,7 +22,11 @@ struct AddShoppingItemView: View {
     
     var body: some View {
         NavigationView {
-            ShoppingItemView(name: $shoppingItemDummy.name, isFavorite: $shoppingItemDummy.isFavorite)
+            ShoppingItemView(
+                name: $shoppingItemDummy.name,
+                isFavorite: $shoppingItemDummy.isFavorite,
+                price: $shoppingItemDummy.price
+            )
             .navigationTitle("Add shopping item")
             .navigationBarItems(
                 leading: Button("Cancel") {
@@ -42,7 +47,11 @@ struct EditShoppingItemView: View {
     @EnvironmentObject var shoppingItemManager: ShoppingItemManager
     
     var body: some View {
-        ShoppingItemView(name: $shoppingItem.name.toNonOptionalString(), isFavorite: $shoppingItem.isFavorite)
+        ShoppingItemView(
+            name: $shoppingItem.name.toNonOptionalString(),
+            isFavorite: $shoppingItem.isFavorite,
+            price: $shoppingItem.price
+        )
         .navigationTitle("Edit shopping item")
         .onDisappear {
             shoppingItemManager.saveContext()
@@ -55,10 +64,23 @@ struct ShoppingItemView: View {
     
     @Binding var isFavorite: Bool
     
+    @Binding var price: Double
+    
+    private let currencyFormatter: NumberFormatter = {
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        return currencyFormatter
+    }()
+    
     var body: some View {
         Form {
-            TextField("Shopping item", text: $name)
-            Toggle("Is favorite", isOn: $isFavorite)
+            Section {
+                TextField("Shopping item", text: $name)
+                Toggle("Is favorite", isOn: $isFavorite)
+            }
+            Section {
+                TextField("Price", value: $price, formatter: currencyFormatter)
+            }
         }
     }
 }
