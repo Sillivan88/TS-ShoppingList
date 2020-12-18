@@ -53,6 +53,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A923B3AB258CF65300CE6D67 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A9B62AC82518E24B00E765E0 /* ContentView.swift */,
+				A9F88F8525598A760063B64A /* ShoppingItemsList.swift */,
+				A9690B36251CBD1C00F45167 /* AddShoppingItemView.swift */,
+				A9F88F8925598B890063B64A /* MarketsList.swift */,
+				A92FBDAA256002FE007C0280 /* AddMarketView.swift */,
+				A923B3AE258CF6F900CE6D67 /* Helper Views */,
+				A923B3AD258CF6C200CE6D67 /* Extensions */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A923B3AD258CF6C200CE6D67 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A92FBDB2256008AF007C0280 /* BindingExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A923B3AE258CF6F900CE6D67 /* Helper Views */ = {
+			isa = PBXGroup;
+			children = (
+				A92FBDA6255FFEC7007C0280 /* CustomEditButton.swift */,
+			);
+			path = "Helper Views";
+			sourceTree = "<group>";
+		};
+		A923B3AF258CF72C00CE6D67 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A9B62ACF2518E24B00E765E0 /* Persistence.swift */,
+				A9848E2425443C80001F470E /* ShoppingItemManager.swift */,
+				A93F804225669A40003CB8C9 /* MarketManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A923B3B0258CF76E00CE6D67 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A9B62ACA2518E24B00E765E0 /* Assets.xcassets */,
+				A9B62AD42518E24B00E765E0 /* Info.plist */,
+				A9B62AD12518E24B00E765E0 /* TS_ShoppingList.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		A9B62ABA2518E24B00E765E0 = {
 			isa = PBXGroup;
 			children = (
@@ -73,19 +123,9 @@
 			isa = PBXGroup;
 			children = (
 				A9B62AC62518E24B00E765E0 /* TS_ShoppingListApp.swift */,
-				A9B62AC82518E24B00E765E0 /* ContentView.swift */,
-				A9F88F8525598A760063B64A /* ShoppingItemsList.swift */,
-				A9690B36251CBD1C00F45167 /* AddShoppingItemView.swift */,
-				A92FBDA6255FFEC7007C0280 /* CustomEditButton.swift */,
-				A9F88F8925598B890063B64A /* MarketsList.swift */,
-				A92FBDAA256002FE007C0280 /* AddMarketView.swift */,
-				A92FBDB2256008AF007C0280 /* BindingExtension.swift */,
-				A9B62ACF2518E24B00E765E0 /* Persistence.swift */,
-				A9848E2425443C80001F470E /* ShoppingItemManager.swift */,
-				A93F804225669A40003CB8C9 /* MarketManager.swift */,
-				A9B62ACA2518E24B00E765E0 /* Assets.xcassets */,
-				A9B62AD42518E24B00E765E0 /* Info.plist */,
-				A9B62AD12518E24B00E765E0 /* TS_ShoppingList.xcdatamodeld */,
+				A923B3AF258CF72C00CE6D67 /* Model */,
+				A923B3AB258CF65300CE6D67 /* View */,
+				A923B3B0258CF76E00CE6D67 /* Resources */,
 				A9B62ACC2518E24B00E765E0 /* Preview Content */,
 			);
 			path = "TS ShoppingList";
@@ -311,7 +351,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TS ShoppingList/Preview Content\"";
 				DEVELOPMENT_TEAM = 2S49FR3REP;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "TS ShoppingList/Info.plist";
+				INFOPLIST_FILE = "TS ShoppingList/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -333,7 +373,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TS ShoppingList/Preview Content\"";
 				DEVELOPMENT_TEAM = 2S49FR3REP;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "TS ShoppingList/Info.plist";
+				INFOPLIST_FILE = "TS ShoppingList/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
