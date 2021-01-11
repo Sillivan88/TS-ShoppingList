@@ -1,5 +1,5 @@
 //
-//  MarketsList.swift
+//  MarketsListNavigationView.swift
 //  TS ShoppingList
 //
 //  Created by Trainer on 09.11.20.
@@ -42,7 +42,7 @@ struct MarketsList: View {
     }
 }
 
-struct MarketsList_Previews: PreviewProvider {
+struct MarketsListNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         MarketsListNavigationView()
             .environment(\.managedObjectContext, PersistenceController.preview.managedObjectContext)

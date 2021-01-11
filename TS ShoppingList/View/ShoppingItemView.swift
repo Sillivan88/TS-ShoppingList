@@ -1,11 +1,37 @@
 //
-//  AddShoppingItemView.swift
+//  ShoppingItemView.swift
 //  TS ShoppingList
 //
 //  Created by Trainer on 24.09.20.
 //
 
 import SwiftUI
+
+struct ShoppingItemView: View {
+    @Binding var name: String
+    
+    @Binding var isFavorite: Bool
+    
+    @Binding var price: Double
+    
+    private let currencyFormatter: NumberFormatter = {
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.numberStyle = .currency
+        return currencyFormatter
+    }()
+    
+    var body: some View {
+        Form {
+            Section {
+                TextField("Shopping item", text: $name)
+                Toggle("Is favorite", isOn: $isFavorite)
+            }
+            Section {
+                TextField("Price", value: $price, formatter: currencyFormatter)
+            }
+        }
+    }
+}
 
 struct ShoppingItemDummy {
     var name = ""
@@ -59,33 +85,7 @@ struct EditShoppingItemView: View {
     }
 }
 
-struct ShoppingItemView: View {
-    @Binding var name: String
-    
-    @Binding var isFavorite: Bool
-    
-    @Binding var price: Double
-    
-    private let currencyFormatter: NumberFormatter = {
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.numberStyle = .currency
-        return currencyFormatter
-    }()
-    
-    var body: some View {
-        Form {
-            Section {
-                TextField("Shopping item", text: $name)
-                Toggle("Is favorite", isOn: $isFavorite)
-            }
-            Section {
-                TextField("Price", value: $price, formatter: currencyFormatter)
-            }
-        }
-    }
-}
-
-struct AddShoppingItemView_Previews: PreviewProvider {
+struct ShoppingItemView_Previews: PreviewProvider {
     static var previews: some View {
         AddShoppingItemView(showAddShoppingItemView: .constant(false))
             .environmentObject(ShoppingItemManager(usePreview: true))

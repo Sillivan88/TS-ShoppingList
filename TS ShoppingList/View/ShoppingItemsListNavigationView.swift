@@ -1,5 +1,5 @@
 //
-//  ShoppingItemsList.swift
+//  ShoppingItemsListNavigationView.swift
 //  TS ShoppingList
 //
 //  Created by Trainer on 09.11.20.
@@ -91,10 +91,10 @@ struct ShoppingCell: View {
     }
 }
 
-struct ShoppingItemsList_Previews: PreviewProvider {
+struct ShoppingItemsListNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ShoppingItemsList(showAddShoppingItemView: .constant(false))
+            ShoppingItemsListNavigationView()
                 .environment(\.managedObjectContext, PersistenceController.preview.managedObjectContext)
                 .environmentObject(ShoppingItemManager(usePreview: true))
             ShoppingCell(shoppingItem: PersistenceController.testShoppingItem)
