@@ -10,12 +10,13 @@ import Foundation
 class ShoppingItemManager: PersistenceManager {
     
     func addShoppingItem(fromDummy dummy: ShoppingItemDummy) {
-        addShoppingItem(withName: dummy.name, isFavorite: dummy.isFavorite, price: dummy.price)
+        addShoppingItem(withName: dummy.name, market: dummy.market, isFavorite: dummy.isFavorite, price: dummy.price)
     }
     
-    func addShoppingItem(withName name: String, isFavorite: Bool, price: Double) {
+    func addShoppingItem(withName name: String, market: Market?, isFavorite: Bool, price: Double) {
         let shoppingItem = ShoppingItem(context: managedObjectContext)
         shoppingItem.name = name
+        shoppingItem.market = market
         shoppingItem.isFavorite = isFavorite
         shoppingItem.price = price
         saveContext()

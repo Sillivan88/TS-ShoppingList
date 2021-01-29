@@ -10,6 +10,8 @@ import SwiftUI
 struct ShoppingItemView: View {
     @Binding var name: String
     
+    @Binding var market: Market?
+    
     @Binding var isFavorite: Bool
     
     @Binding var price: Double
@@ -24,6 +26,7 @@ struct ShoppingItemView: View {
         Form {
             Section {
                 TextField("Shopping item", text: $name)
+                MarketPicker(market: $market)
                 Toggle("Is favorite", isOn: $isFavorite)
             }
             Section {
@@ -33,8 +36,27 @@ struct ShoppingItemView: View {
     }
 }
 
+struct MarketPicker: View {
+    @FetchRequest(
+        entity: Market.entity(),
+        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]
+    ) private var markets: FetchedResults<Market>
+    
+    @Binding var market: Market?
+    
+    var body: some View {
+        Picker("Market", selection: $market) {
+            ForEach(markets) { market in
+                Text(market.name ?? "")
+                    .tag(market as Market?)
+            }
+        }
+    }
+}
+
 struct ShoppingItemDummy {
     var name = ""
+    var market: Market? = nil
     var isFavorite = false
     var price: Double = 0
 }
@@ -50,6 +72,7 @@ struct AddShoppingItemView: View {
         NavigationView {
             ShoppingItemView(
                 name: $shoppingItemDummy.name,
+                market: $shoppingItemDummy.market,
                 isFavorite: $shoppingItemDummy.isFavorite,
                 price: $shoppingItemDummy.price
             )
@@ -75,6 +98,7 @@ struct EditShoppingItemView: View {
     var body: some View {
         ShoppingItemView(
             name: $shoppingItem.name.toNonOptionalString(),
+            market: $shoppingItem.market,
             isFavorite: $shoppingItem.isFavorite,
             price: $shoppingItem.price
         )
