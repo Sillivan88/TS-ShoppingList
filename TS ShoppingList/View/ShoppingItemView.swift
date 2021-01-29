@@ -85,6 +85,19 @@ struct EditShoppingItemView: View {
     }
 }
 
+struct AddShoppingItemButton: View {
+    @Binding var showAddShoppingItemView: Bool
+    
+    @Environment(\.editMode) var editMode
+    
+    var body: some View {
+        Button("Add") {
+            showAddShoppingItemView = true
+        }
+        .disabled(editMode?.wrappedValue.isEditing ?? false)
+    }
+}
+
 struct ShoppingItemView_Previews: PreviewProvider {
     static var previews: some View {
         AddShoppingItemView(showAddShoppingItemView: .constant(false))

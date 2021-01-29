@@ -43,16 +43,15 @@ struct ShoppingItemsList: View {
             }
         }
         .navigationTitle("Shopping List")
-        .navigationBarItems(
-            leading:
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
                 CustomEditButton()
-                    .disabled(shoppingItems.isEmpty),
-            trailing:
-                Button("Add") {
-                    showAddShoppingItemView = true
-                }
-                .disabled(editMode?.wrappedValue.isEditing ?? false)
-        )
+                    .disabled(shoppingItems.isEmpty)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                AddShoppingItemButton(showAddShoppingItemView: $showAddShoppingItemView)
+            }
+        }
         .sheet(isPresented: $showAddShoppingItemView, content: {
             AddShoppingItemView(showAddShoppingItemView: $showAddShoppingItemView)
                 .environmentObject(shoppingItemManager)
