@@ -24,13 +24,21 @@ struct ShoppingItemView: View {
     
     var body: some View {
         Form {
-            Section {
+            Section(header: Text("Shopping item")) {
                 TextField("Shopping item", text: $name)
-                MarketPicker(market: $market)
-                Toggle("Is favorite", isOn: $isFavorite)
             }
-            Section {
+            Section(header: Text("Market")) {
+                MarketPicker(market: $market)
+                if market != nil {
+                    Button("No market") {
+                        market = nil
+                    }
+                    .foregroundColor(.red)
+                }
+            }
+            Section(header: Text("Other")) {
                 TextField("Price", value: $price, formatter: currencyFormatter)
+                Toggle("Is favorite", isOn: $isFavorite)
             }
         }
     }
