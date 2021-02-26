@@ -7,6 +7,46 @@
 
 import SwiftUI
 
+struct MarketView: View {
+    @ObservedObject var market: Market
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Name")) {
+                TextField("Name", text: $market.name.toNonOptionalString())
+            }
+            Section(header: Text("Notes")) {
+                TextEditor(text: $market.notes.toNonOptionalString())
+                    .frame(height: 300)
+            }
+        }
+    }
+}
+
+struct EditMarketView: View {
+    @ObservedObject var market: Market
+    
+    @EnvironmentObject var marketManager: MarketManager
+    
+    var body: some View {
+        MarketView(market: market)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        marketManager.saveContext()
+                        market.objectWillChange.send()
+                    }
+                    .disabled(!market.hasChanges)
+                }
+            }
+            .onDisappear {
+                if market.hasChanges {
+                    marketManager.managedObjectContext.refresh(market, mergeChanges: false)
+                }
+            }
+    }
+}
+
 struct AddMarketView: View {
     private var newMarket: StateObject<Market>
     
@@ -24,15 +64,7 @@ struct AddMarketView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Name")) {
-                    TextField("Name", text: newMarket.projectedValue.name.toNonOptionalString())
-                }
-                Section(header: Text("Notes")) {
-                    TextEditor(text: newMarket.projectedValue.notes.toNonOptionalString())
-                        .frame(height: 300)
-                }
-            }
+            MarketView(market: newMarket.wrappedValue)
             .navigationBarItems(
                 leading: Button("Cancel") {
                     hideAddMarketView(shouldSaveNewMarket: false)

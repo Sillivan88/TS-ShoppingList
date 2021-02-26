@@ -29,7 +29,7 @@ struct MarketsList: View {
     var body: some View {
         List {
             ForEach(markets) { market in
-                Text(market.name ?? "")
+                MarketCell(market: market)
             }
         }
         .navigationBarItems(trailing: Button("Add") {
@@ -39,6 +39,14 @@ struct MarketsList: View {
         .sheet(isPresented: $showAddMarketView) {
             AddMarketView(showAddMarketView: $showAddMarketView, marketManager: marketManager)
         }
+    }
+}
+
+struct MarketCell: View {
+    @ObservedObject var market: Market
+    
+    var body: some View {
+        NavigationLink(market.name ?? "", destination: EditMarketView(market: market))
     }
 }
 
