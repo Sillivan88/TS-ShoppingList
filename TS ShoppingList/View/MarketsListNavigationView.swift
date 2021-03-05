@@ -32,12 +32,16 @@ struct MarketsList: View {
                 MarketCell(market: market)
             }
         }
-        .navigationBarItems(trailing: Button("Add") {
-            showAddMarketView = true
-        })
         .navigationTitle("Markets")
         .sheet(isPresented: $showAddMarketView) {
             AddMarketView(showAddMarketView: $showAddMarketView, marketManager: marketManager)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Add") {
+                    showAddMarketView = true
+                }
+            }
         }
     }
 }

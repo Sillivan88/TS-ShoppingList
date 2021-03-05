@@ -1,5 +1,5 @@
 //
-//  AddMarketView.swift
+//  MarketView.swift
 //  TS ShoppingList
 //
 //  Created by Trainer on 14.11.20.
@@ -65,14 +65,18 @@ struct AddMarketView: View {
     var body: some View {
         NavigationView {
             MarketView(market: newMarket.wrappedValue)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    hideAddMarketView(shouldSaveNewMarket: false)
-                },
-                trailing: Button("Save") {
-                    hideAddMarketView(shouldSaveNewMarket: true)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel") {
+                            hideAddMarketView(shouldSaveNewMarket: false)
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save") {
+                            hideAddMarketView(shouldSaveNewMarket: true)
+                        }
+                    }
                 }
-            )
         }
         .onDisappear {
             if !didDisappearWithButton {

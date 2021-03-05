@@ -85,15 +85,19 @@ struct AddShoppingItemView: View {
                 price: $shoppingItemDummy.price
             )
             .navigationTitle("Add shopping item")
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    showAddShoppingItemView = false
-                },
-                trailing: Button("Save") {
-                    shoppingItemManager.addShoppingItem(fromDummy: shoppingItemDummy)
-                    showAddShoppingItemView = false
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        showAddShoppingItemView = false
+                    }
                 }
-            )
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        shoppingItemManager.addShoppingItem(fromDummy: shoppingItemDummy)
+                        showAddShoppingItemView = false
+                    }
+                }
+            }
         }
     }
 }
