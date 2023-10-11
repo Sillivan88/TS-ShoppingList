@@ -17,7 +17,7 @@ struct ContentView: View {
             ShoppingItemsListNavigationView()
                 .environmentObject(shoppingItemManager)
                 .tabItem {
-                    Text("Shopping List")
+                    Text("Shopping items")
                     Image(systemName: "cart.fill")
                 }
             MarketsListNavigationView()
